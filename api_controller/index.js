@@ -1,8 +1,8 @@
 const {loeTodoAndmed, lisaTodoData} = require('../data')
 
-const tagastaTodod = (req, res) => {
-    const todod = loeTodoAndmed()
-    console.log(todod)
+const tagastaTodod = async (req, res) => {
+    const todod = await loeTodoAndmed()
+    //console.log(todod)
     res.json(todod)
 }
 

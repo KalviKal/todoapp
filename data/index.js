@@ -39,25 +39,24 @@ async function lisaTodoData(todo){
    
 }
 
-/* async function loeTodoAndmed(){
+async function loeTodoAndmed(){
     try {
         await client.connect();
         const database = client.db(andmebaas);
-        const todod_collections = database.collection("todod");
+        const tododCollections = database.collection("todod");
         //const filter = { todo: req.params.indeks}
         //const filter = { todo}
     
         //result = await todod.find(filter).toArray()
-        const todod = await todod_collections.find({}).toArray()
-        //console.log(`A document was inserted with the _id: ${result.insertedId}`)
-        console.log(todod)
-        console.log(todod[0])
+        const todod = await tododCollections.find({}).toArray()
+        //console.log(todod)
+        //console.log(todod[0])
         return todod
     } finally {
         await client.close();
         
     }
-} */
+} 
 
 
 

@@ -15,7 +15,7 @@ async function loeTododJaKuvaLeht() {
     todod = await result.json()
     console.log(todod)
     todoSisu.innerHTML = looLeheHTML(todod)
-    naitaParemPaan(0)
+    
 }
 
 
@@ -26,11 +26,8 @@ function looLeheHTML(todod) {
     const vasakPaan = looVasakPaanHTML(todod)
     return `
     <div class="row">
-        <div class="col-4">
+        <div class="col-7">
             ${vasakPaan}
-        </div>
-        <div id="parem-paan-sisu" class="col-8">
-            siia tuleb parem paan
         </div>
     </div>
     `
@@ -38,37 +35,83 @@ function looLeheHTML(todod) {
 
 
 function looVasakPaanHTML(todod){
-    const todoInfo = `
-        <div>
-            esimene matk
-        </div>
-        `
+    
     
     let vasakPaan = ''
     let id = 0
+    let done_class = ""
+    let done_sign = ""
+    vasakPaan += `
+    <table id="todod">
+            <tr>
+                <th>Tehtud</th>
+                <th>Todo ID</th>
+                <th>KasTehtud</th>
+                <th>Nimetus</th>
+                <th>Prioriteet</th>
+            </tr>`
     for (todo of todod) {
+        if (todo.kasTehtud === "true")
+            {done_class = "checkmark",
+            done_sign = ""   
+            console.log(done_class)
+            }
+        else {
+            done_class = "notcheckmark"
+            done_sign = "X"
+            console.log(done_class)
+        }
         vasakPaan += `
-        <div class="vasak-paan-valik" onclick="naitaParemPaan(${id})">
-            <h3>${todo.nimetus}</h3>
-        </div>
+        <tr>
+            <td class="${done_class}" id="${id}" >${done_sign}</td>
+            <td>${id}</td>
+            <td>${todo.kasTehtud}</td>
+            <td>${todo.nimetus}</td>
+            <td>${todo.prioriteet}</td>
+        </tr>
         `
         id += 1
-    }
+    }  
+    vasakPaan += `</table>`        
+        
+        
+    
     return vasakPaan
 }
 
-function naitaParemPaan(todoId){
-    const paremPaan = document.getElementById('parem-paan-sisu')
-    const todo = todod[todoId]
-
-
-    const paremPaanHtml = `
-        <h3>ToDo: ${todo.nimetus}</h3>
-        <div>Prioriteet: ${todo.prioriteet}</div>
-        <div>Kas Tehtud: ${todo.kasTehtud}</div>
-    `
-    paremPaan.innerHTML = paremPaanHtml
-}
 
 
 loeTododJaKuvaLeht()
+
+
+async function lisaTodo(){
+    const todoNimetus = document.getElementById('todoNimetus').value
+    console.log(todoNimetus)
+    const todoPrioriteet = document.getElementById('todoPrioriteet').value
+    console.log(todoPrioriteet)
+    const uusTodo = {
+        "nimetus": todoNimetus,
+        "prioriteet": todoPrioriteet
+    }
+    
+    const response = await fetch(`/api/todo`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(uusTodo)
+    })
+
+    if (response.status === 201){
+        alert(todoNimetus + ': Todo lisatud')
+        console.log(response)
+    }
+    else {
+        alert('ToDo lisamine ebaõnnestus')
+        console.log(response)
+    }
+    loeTododJaKuvaLeht()
+    
+
+
+}

@@ -4,7 +4,34 @@ POST http://localhost:3030/api/todo HTTP/1.1
 Content-Type: application/json
 
 {
-    "nimetus": "prea muna",
-    "prioriteet": 1,
-    "kasTehtud": true
+    "nimetus": "Pese pead uuesti",
+    "prioriteet": 2
+}
+
+### Muuda Todo'd
+
+POST http://localhost:3030/api/todo/4 HTTP/1.1
+Content-Type: application/json
+
+{
+    "prioriteet": 33,
+    "kasTehtud": "true"
+}
+
+### Muuda Todo prioriteeti
+
+POST http://localhost:3030/api/todo/4 HTTP/1.1
+Content-Type: application/json
+
+{
+    "prioriteet": 45
+}
+
+### Märgi Todo tehtuks
+
+POST http://localhost:3030/api/todo/3 HTTP/1.1
+Content-Type: application/json
+
+{
+    "kasTehtud": "true"
 }

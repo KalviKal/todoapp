@@ -2,7 +2,7 @@ const express = require("express");
 const path = require("path");
 
 const { } =require("./controller");
-const {tagastaTodod, lisaTodo } = require('./api_controller');
+const {tagastaTodod, lisaTodo, muudaTodoCtrl } = require('./api_controller');
 
 
 const app = express();
@@ -23,6 +23,7 @@ app.get('/', (req, res) => {res.render('pages/index')})
 app.get('/api/test', (req, res) => res.send({sonum: 'test'}))
 app.get('/api/todo', tagastaTodod)
 app.post('/api/todo', lisaTodo)
+app.post('/api/todo/:id', muudaTodoCtrl)
 
 
 app.listen(PORT, () => console.log(`TodoApp Listening on: ${PORT}`))
